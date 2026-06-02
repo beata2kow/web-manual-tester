@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Local-only domain vocabulary recovery key (contains the original real-world terms)
+domain-vocabulary.json
+
+# Secrets / environment
+.env
+.env.*
+**/secrets/.env
+*.pem
+*.key
+
+# Test scenario workbooks & data (keep off the public repo)
+*.xlsx
+*.xls
+*.csv
+
+# Environment config (contains users, passwords, tokens, URLs)
+apps/*/config/*.json
+
+# Generated reports
+reports/
+.agent-reports/
+**/agents/reports/
+
+# Node
+node_modules/
+npm-debug.log*

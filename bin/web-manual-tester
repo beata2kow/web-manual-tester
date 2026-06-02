@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOOL_ROOT="$(cd "$(dirname "$0")/../tools/web-manual-tester" && pwd)"
+REPO_ROOT="${WEB_MANUAL_TESTER_REPO_ROOT:-}"
+
+# Optional first argument: explicit repo path (not a flag)
+if [[ -n "${1:-}" && "${1:0:1}" != "-" && -d "${1}" ]]; then
+  REPO_ROOT="$(cd "$1" && pwd)"
+  shift
+fi
+
+if [[ -z "$REPO_ROOT" ]]; then
+  REPO_ROOT="$(pwd)"
+fi
+
+export WEB_MANUAL_TESTER_REPO_ROOT="$REPO_ROOT"
+cd "$REPO_ROOT"
+
+TS_NODE_TRANSPILE_ONLY=1 \
+TS_NODE_COMPILER_OPTIONS='{"module":"CommonJS"}' \
+  node -r ts-node/register "$TOOL_ROOT/execute-all-tests.ts" \
+  --repo-root "$REPO_ROOT" "$@"
